@@ -1,67 +1,47 @@
 import React from 'react';
-import { MapPin, Clock } from 'lucide-react';
+import { MapPin, ArrowRight } from 'lucide-react';
 
 const LocationSection: React.FC = () => {
   return (
-    <section id="location" className="py-24 bg-platinum relative">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        
-        <div className="text-center mb-16">
-          <h2 className="font-serif text-4xl text-ink mb-4">The Atelier</h2>
-          <p className="font-sans text-ink-light tracking-wide">Visit our gallery at The Platinum Fashion Mall</p>
-        </div>
+    <section id="location" className="py-20 bg-bg reveal-section">
+      <div className="max-w-[1400px] mx-auto px-6">
+        <div className="relative h-[600px] w-full overflow-hidden">
+           
+           {/* Background Map/Image */}
+           <img 
+               src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?q=80&w=2000&auto=format&fit=crop" 
+               alt="Store Atmosphere" 
+               className="w-full h-full object-cover grayscale opacity-80 hover:grayscale-0 transition-all duration-1000"
+           />
 
-        <div className="bg-white rounded-[2rem] shadow-xl overflow-hidden flex flex-col lg:flex-row">
-          
-          {/* Shop Image - Mimicking the Shop Image provided */}
-          <div className="lg:w-3/5 h-[400px] lg:h-auto relative">
-             <img 
-              src="https://picsum.photos/1200/800?random=20" // Placeholder for Shop Interior
-              alt="Anna Paris Jewelry Store Front" 
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-ink/10 mix-blend-multiply"></div>
-          </div>
-
-          {/* Info Card */}
-          <div className="lg:w-2/5 p-10 lg:p-16 flex flex-col justify-center space-y-8 bg-white/50 backdrop-blur-sm">
-            <div className="space-y-2">
-              <h3 className="font-serif text-2xl text-ink">Bangkok Flagship</h3>
-              <div className="h-0.5 w-12 bg-champagne-dark"></div>
-            </div>
-
-            <div className="space-y-6">
-              <div className="flex items-start gap-4 group">
-                <div className="p-3 bg-platinum rounded-full group-hover:bg-champagne transition-colors">
-                  <MapPin className="text-ink w-5 h-5" />
-                </div>
-                <div>
-                  <p className="font-sans font-bold text-ink text-sm uppercase tracking-wide mb-1">Address</p>
-                  <p className="font-sans text-ink-light leading-relaxed">
-                    Platinum Fashion Mall<br/>
-                    Zone 2, Floor 3, Room 228A<br/>
-                    Petchaburi Road, Bangkok
-                  </p>
-                </div>
+           {/* Floating Glass Card */}
+           <div className="absolute top-1/2 left-1/2 md:left-24 -translate-y-1/2 -translate-x-1/2 md:translate-x-0 w-[90%] md:w-[400px] bg-white/80 backdrop-blur-xl border border-white/50 shadow-2xl p-10">
+              <div className="flex items-center gap-2 mb-6 text-ink/50">
+                <MapPin size={16} />
+                <span className="text-[10px] uppercase tracking-widest">The Atelier</span>
+              </div>
+              
+              <h3 className="font-serif text-4xl text-ink mb-8">Visit Us</h3>
+              
+              <div className="space-y-6 text-sm font-sans text-ink/80">
+                 <div className="border-l-2 border-ink/10 pl-4">
+                    <p className="font-bold text-ink uppercase tracking-widest text-[10px] mb-1">Platinum Fashion Mall</p>
+                    <p>Zone 2, Floor 3, Room 228A</p>
+                    <p>Ratchathewi, Bangkok</p>
+                 </div>
+                 
+                 <div className="border-l-2 border-ink/10 pl-4">
+                    <p className="font-bold text-ink uppercase tracking-widest text-[10px] mb-1">Opening Hours</p>
+                    <p>Every Day: 10:00 - 19:00</p>
+                 </div>
               </div>
 
-              <div className="flex items-start gap-4 group">
-                <div className="p-3 bg-platinum rounded-full group-hover:bg-champagne transition-colors">
-                  <Clock className="text-ink w-5 h-5" />
-                </div>
-                <div>
-                  <p className="font-sans font-bold text-ink text-sm uppercase tracking-wide mb-1">Opening Hours</p>
-                  <p className="font-sans text-ink-light">
-                    Daily: 10:00 AM - 7:00 PM
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <button className="mt-4 px-6 py-3 border border-ink text-ink font-sans text-sm uppercase tracking-widest hover:bg-ink hover:text-white transition-all duration-300 w-fit">
-              Get Directions
-            </button>
-          </div>
+              <button className="mt-10 w-full py-4 border border-ink text-ink text-xs uppercase tracking-widest hover:bg-ink hover:text-white transition-all flex items-center justify-center gap-2 group">
+                 Get Directions
+                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform"/>
+              </button>
+           </div>
+
         </div>
       </div>
     </section>

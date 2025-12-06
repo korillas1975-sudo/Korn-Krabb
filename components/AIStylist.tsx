@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Sparkles, Loader2 } from 'lucide-react';
+import { Send, Sparkles } from 'lucide-react';
 import { getGeminiResponse } from '../services/geminiService';
 import { ChatMessage } from '../types';
 
 const AIStylist: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'model', text: 'Bonjour. I am Anna, your personal pearl consultant. Are you looking for a piece for a specific occasion or outfit today?' }
+    { role: 'model', text: 'Bonjour. I am Anna. How can I style you today?' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -38,72 +38,84 @@ const AIStylist: React.FC = () => {
   };
 
   return (
-    <section id="ai-stylist" className="py-24 bg-gradient-to-b from-white to-platinum overflow-hidden">
-      <div className="max-w-4xl mx-auto px-6">
-        
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center p-2 bg-champagne rounded-full mb-4">
-            <Sparkles className="w-5 h-5 text-ink/70" />
-          </div>
-          <h2 className="font-serif text-3xl md:text-4xl text-ink mb-4">Virtual Pearl Consultant</h2>
-          <p className="font-sans text-ink-light">Ask for styling advice from our AI specialist.</p>
-        </div>
+    <section id="ai-stylist" className="py-12 bg-ink text-white relative overflow-hidden reveal-section">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-ink via-gray-900 to-ink"></div>
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-[80px]"></div>
 
-        {/* Chat Interface Container */}
-        <div className="bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-2xl border border-white/50 overflow-hidden flex flex-col h-[500px]">
-          
-          {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
-            {messages.map((msg, index) => (
-              <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div 
-                  className={`max-w-[80%] p-4 rounded-2xl text-sm leading-relaxed font-sans ${
-                    msg.role === 'user' 
-                      ? 'bg-ink text-white rounded-tr-sm' 
-                      : 'bg-platinum text-ink rounded-tl-sm border border-hairline'
-                  }`}
-                >
-                  {msg.text}
+        <div className="max-w-4xl mx-auto px-6 grid md:grid-cols-5 gap-8 items-center relative z-10">
+            
+            {/* Left: Compact Context (2 cols) */}
+            <div className="md:col-span-2 space-y-4">
+                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5">
+                    <Sparkles size={10} className="text-white/80" />
+                    <span className="text-[9px] uppercase tracking-widest text-white/70">Pearl Consultant</span>
+                 </div>
+                 <h2 className="font-serif text-3xl md:text-4xl leading-tight">
+                    Digital Atelier
+                 </h2>
+                 <p className="font-sans text-xs text-white/50 leading-relaxed">
+                    Ask Anna about styling advice, pairings, or gift ideas.
+                 </p>
+            </div>
+
+            {/* Right: Compact Chat UI (3 cols) */}
+            <div className="md:col-span-3">
+                <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden h-[350px] flex flex-col relative">
+                    
+                    {/* Header */}
+                    <div className="px-4 py-3 border-b border-white/5 bg-white/5 flex items-center justify-between">
+                       <span className="text-[10px] uppercase tracking-widest text-white/80">Live Chat</span>
+                       <div className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_8px_#4ade80]"></div>
+                    </div>
+
+                    {/* Messages Area */}
+                    <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
+                        {messages.map((msg, index) => (
+                        <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                            <div 
+                            className={`max-w-[90%] px-4 py-2 text-xs font-sans leading-relaxed ${
+                                msg.role === 'user' 
+                                ? 'bg-white text-ink rounded-2xl rounded-tr-none' 
+                                : 'bg-white/10 text-white border border-white/5 rounded-2xl rounded-tl-none'
+                            }`}
+                            >
+                            {msg.text}
+                            </div>
+                        </div>
+                        ))}
+                        {isLoading && (
+                             <div className="flex gap-1 pl-2">
+                                <span className="w-1 h-1 bg-white/50 rounded-full animate-bounce"></span>
+                                <span className="w-1 h-1 bg-white/50 rounded-full animate-bounce delay-100"></span>
+                                <span className="w-1 h-1 bg-white/50 rounded-full animate-bounce delay-200"></span>
+                             </div>
+                        )}
+                        <div ref={messagesEndRef} />
+                    </div>
+
+                    {/* Compact Input */}
+                    <div className="p-3 bg-black/20 border-t border-white/5">
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="text"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={handleKeyPress}
+                                placeholder="Ask Anna..."
+                                className="flex-1 bg-transparent px-2 py-2 text-xs text-white placeholder-white/30 focus:outline-none"
+                            />
+                            <button 
+                                onClick={handleSend}
+                                className="p-2 rounded-full bg-white/10 hover:bg-white hover:text-ink transition-colors text-white"
+                            >
+                                <Send size={14} />
+                            </button>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            ))}
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-platinum p-4 rounded-2xl rounded-tl-sm flex items-center space-x-2">
-                  <Loader2 className="w-4 h-4 animate-spin text-ink/50" />
-                  <span className="text-xs text-ink/50 font-sans tracking-wide">Consulting archives...</span>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Input Area */}
-          <div className="p-4 bg-white border-t border-hairline flex items-center gap-3">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyPress}
-              placeholder="E.g., What goes well with a navy business suit?"
-              className="flex-1 bg-platinum/50 border-none rounded-full px-6 py-3 font-sans text-sm focus:ring-1 focus:ring-ink/20 focus:outline-none placeholder-ink/30 transition-all"
-            />
-            <button 
-              onClick={handleSend}
-              disabled={isLoading}
-              className="p-3 bg-ink text-white rounded-full hover:bg-ink-light transition-all disabled:opacity-50 shadow-md"
-            >
-              <Send size={18} />
-            </button>
-          </div>
-
+            </div>
         </div>
-
-        <div className="mt-6 text-center">
-            <p className="text-[10px] uppercase tracking-widest text-ink/40">Powered by Google Gemini 2.5</p>
-        </div>
-
-      </div>
     </section>
   );
 };

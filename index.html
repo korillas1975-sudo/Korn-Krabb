@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,28 +25,68 @@
               serif: ['Playfair Display', 'serif'],
               sans: ['Lato', 'sans-serif'],
             },
+            transitionTimingFunction: {
+              'out-expo': 'cubic-bezier(0.19, 1, 0.22, 1)',
+            },
+            animation: {
+              'fade-up': 'fadeUp 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards',
+            },
+            keyframes: {
+              fadeUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              }
+            }
           }
         }
       }
     </script>
     <style>
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 120px; /* Prevents navbar from covering content on scroll */
+      }
       body {
         background-color: #FCFCFD;
         color: #0F1A24;
+        overflow-x: hidden;
       }
-      /* Custom scrollbar for Webkit */
+      
+      /* Advanced Reveal Animation Classes */
+      .reveal-section {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+        transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+        will-change: opacity, transform;
+      }
+      
+      .reveal-section.is-visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      /* Custom scrollbar */
       ::-webkit-scrollbar {
-        width: 6px;
+        width: 4px;
+        height: 4px;
       }
       ::-webkit-scrollbar-track {
-        background: #FCFCFD;
+        background: transparent;
       }
       ::-webkit-scrollbar-thumb {
-        background: #E6EAF0;
-        border-radius: 3px;
+        background: rgba(15, 26, 36, 0.2);
+        border-radius: 2px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #0F1A24;
+        background: rgba(15, 26, 36, 0.5);
+      }
+      
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
       }
     </style>
   <script type="importmap">
